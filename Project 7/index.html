@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People + Notes App Toggle</title>
+
+    <!-- Cody Star font import -->
+    <link href="https://fonts.googleapis.com/css2?family=CodyStar&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "CodyStar", sans-serif;
+            background: #ffffff;
+            color: #111;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 400;
+            font-family: "CodyStar", sans-serif;
+        }
+
+        #toggle-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 auto;
+            display: block;
+            transition: opacity 0.3s ease;
+            font-family: "CodyStar", sans-serif;
+        }
+
+        #toggle-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* profile card */
+        #profile-card {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 24px;
+            border: 1px solid #e5e5e5;
+            transition: background 0.35s ease, border 0.35s ease, transform 0.3s ease;
+            font-family: "CodyStar", sans-serif;
+        }
+
+        #profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        #profile-name {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-family: "CodyStar", sans-serif;
+        }
+
+        #profile-text {
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: center;
+            color: #555;
+            font-family: "CodyStar", sans-serif;
+        }
+
+        /* TOGGLED MODE → Notes App aesthetic */
+        .togglesaurus {
+            background: #fffdf6;
+            border: 1px solid #f0e6c8;
+        }
+
+        .togglesaurus #profile-text {
+            font-family: "Cody Star", sans-serif; /* stays Cody Star */
+            white-space: pre-line;
+            text-align: left;
+            color: #333;
+        }
+
+        .togglesaurus #profile-card {
+            transform: rotate(-0.4deg);
+        }
+
+        @media (max-width: 660px) {
+            h1 {
+                font-size: 26px;
+            }
+
+            #profile-card {
+                padding: 22px;
+            }
+
+            #profile-img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>This is me</h1>
+        <button id="toggle-btn">peek me</button>
+
+        <section id="profile-card">
+            <img id="profile-img" src="jisoo.jpg" alt="Person Profile">
+            <div id="profile-name">Jisoo</div>
+            <div id="profile-text">
+               nyc based  
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        let toggleBtn = document.getElementById("toggle-btn");
+        let card = document.getElementById("profile-card");
+        let text = document.getElementById("profile-text");
+
+        toggleBtn.addEventListener("click", function() {
+            card.classList.toggle("togglesaurus");
+
+            if (card.classList.contains("togglesaurus")) {
+                text.textContent = 
+`– Shit that I consume in daily 
+
+Unnecessary information about other people through social media
+My reflection through mirror
+– Today was good to hang out with you i had a lot of fun while talking with you but I'm not sure that I'm ready to
+like anyone
+– it's alr
+cops were ab to pull up to his house after u guys left
+– Why I will become a dancer
+– Memoir; 2 project
+Making a bag
+Wet felting
+﻿﻿Wet felting
+﻿﻿Felt
+﻿﻿Needle
+﻿﻿Sponge
+﻿﻿2 brushes
+﻿﻿Bubble sheet
+﻿﻿분무기
+﻿﻿Eyelet`;
+            } else {
+                text.textContent = 
+"seoul/nyc \n.";
+            }
+        });
+    </script>
+
+</body>
+</html>
