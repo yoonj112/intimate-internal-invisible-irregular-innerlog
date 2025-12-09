@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slideshow</title>
+  <style>
+    body {
+      background: #ffffff;
+      margin: 0;
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      gap: 20px; 
+    }
+
+   
+    .top-image {
+      width: 300px; 
+      height: auto;
+      border: none; 
+      display: block;
+    }
+
+  
+    .slideshow-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+   
+    .slideshow-container img {
+      width: 500px; 
+      height: auto;
+      border-radius: 0;
+      display: block;
+    }
+
+    
+    .arrow {
+      font-size: 4rem; 
+      font-weight: 200;
+      color: #000000;
+      background: #fff;
+      padding: 5px 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .arrow:hover {
+      background: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+ 
+  <img src="/may 27 memo.jpg" alt="Top Image" class="top-image">
+
+
+  <div class="slideshow-container">
+
+    <span class="arrow prev" onclick="changeSlide(-1)">&#8678;</span>
+    
+
+    <a href="./about.html">
+      <img id="slide" src="./may 27-2.jpg" alt="Slideshow Image">
+    </a>
+
+    <span class="arrow next" onclick="changeSlide(1)">&#8680;</span>
+  </div>
+
+  <script>
+    const images = [
+      "./may 27-2.jpg",
+      "./may 27-1.jpg",
+      "./may 27-3.jpg"
+    ];
+
+    let currentIndex = 0;
+    const slide = document.getElementById("slide");
+
+    function changeSlide(direction) {
+      currentIndex += direction;
+
+      if (currentIndex >= images.length) {
+        currentIndex = 0;
+      }
+      if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+      }
+
+      slide.src = images[currentIndex];
+    }
+  </script>
+
+</body>
+</html>
