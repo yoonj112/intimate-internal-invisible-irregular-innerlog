@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 9: Harmonic Messages</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- CUSTOMIZATION PANEL -->
+  <div id="controlsPanel" class="colorbean">
+    <label>Change Background Color:</label>
+    <input type="color" id="bgColorPicker">
+
+    <label>Page Title:</label>
+    <input type="text" id="titleInput" placeholder="Enter title...">
+
+    <label>Select Floating Speed:</label>
+    <select id="floatSpeed">
+      <option value="6s">Normal</option>
+      <option value="3s">Fast</option>
+      <option value="10s">Slow</option>
+    </select>
+
+    <button id="printBtn" onclick="window.print()">Print Page</button>
+  </div>
+
+  <div id="startScreen">
+    <button id="startBtn">Enter →</button>
+  </div>
+
+  <img src="nana.jpg" class="bgMove" id="bg1">
+  <img src="jisoo.3jpg" class="bgMove" id="bg3">
+
+  <!-- PEOPLE GRID -->
+  <div id="peopleLayout">
+    <img src="nana.jpg" class="person" data-target="memo1">
+    <img src="jisoo3.jpg" class="person" data-target="memo3">
+  </div>
+
+  <!-- MEMO PAGES -->
+  <div id="memo1" class="memoPage">
+    <button class="backBtn">← Back</button>
+    <img src="nana.jpg" class="memoImage">
+  </div>
+
+
+  <div id="memo3" class="memoPage">
+    <button class="backBtn">← Back</button>
+    <img src="jisoo3.jpg" class="memoImage">
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+
+
