@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Simple Memo Picker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Codystar:wght@300;400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <div class="left">
+    <h1>Choose a Profile</h1>
+
+    <form id="profile-form">
+      <label class="option">
+        <input type="radio" name="profile" value="david" checked>
+        David
+      </label>
+
+      <label class="option">
+        <input type="radio" name="profile" value="tam">
+        Tam
+      </label>
+
+      <label class="option">
+        <input type="radio" name="profile" value="alice">
+        Alice
+      </label>
+    </form>
+
+    <h2 style="margin-top:28px;">Write Memo</h2>
+    <textarea id="note-input">remember to drink water</textarea>
+
+  </div>
+
+  <aside class="preview">
+    <img id="preview-photo" class="photo" src="David.jpg">
+    <div id="preview-name" class="name">David</div>
+
+    <div id="note-preview" class="note-card"></div>
+  </aside>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
