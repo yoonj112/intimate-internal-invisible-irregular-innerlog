@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5-27-23 — Archive</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .image-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px; /* space between images */
+      margin-top: 50px;
+      margin-bottom: 100px; /* room for back button */
+    }
+
+    .image-stack img {
+      width: auto;
+      max-width: 80%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .back-button {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .back-button img {
+      width: 70px;
+      height: auto;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .back-button img:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-stack">
+    <img src="/5-27-23-1.jpg" alt="Image 1">
+    <img src="/5-27-23-2.jpg" alt="Image 2">
+    <img src="/5-27-23-3.jpg" alt="Image 3">
+  </div>
+
+  <div class="back-button">
+    <a href="archive.html">
+      <img src="IMG_4043.jpg" alt="Go Back" onclick="history.back()">
+    </a>
+  </div>
+</body>
+</html>
