@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project 9: Harmonic Messages</title>
+<link href="https://fonts.googleapis.com/css2?family=Coda+Star&display=swap" rel="stylesheet">
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Coda Star', monospace;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* START SCREEN */
+#startScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#nana {
+  width: 260px;
+  cursor: pointer;
+  transition: opacity 1s ease;
+}
+
+/* LAYOUT */
+#layout {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Background floating images */
+.bgMove {
+  position: absolute;
+  width: 100px;
+  opacity: 0.6;
+  animation: floaty 6s ease-in-out infinite;
+  z-index: 0;
+}
+#bg1 { width:60px !important; opacity:0.9; }
+
+/* People images */
+.person {
+  position: absolute;
+  width: 120px;
+  cursor: pointer;
+  transition: left 3s ease, top 3s ease, transform 0.25s ease;
+  opacity: 0.9;
+  z-index: 1;
+}
+.person:hover { transform:translateY(-10px) rotate(2deg); }
+
+/* Float animation */
+@keyframes floaty {
+  0%   { transform:translateY(0px); }
+  50%  { transform:translateY(-15px); }
+  100% { transform:translateY(0px); }
+}
+
+/* Memo overlay */
+#memoOverlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(255,255,255,0.85);
+  display: none;
+  justify-content:center;
+  align-items:center;
+  z-index:5;
+}
+
+#memoContainer {
+  width: 700px;       /* Bigger memo */
+  max-width: 95%;
+  padding: 30px;      /* More padding */
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  box-shadow: none;
+}
+
+#memoContainer img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+#backBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  border: 1px solid #000;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  border-radius: 3px;
+}
+#backBtn:hover { background: #000; color: #fff; }
+
+textarea {
+  width: 90%;
+  height: 60px;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 14px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 4px 10px;
+  margin: 2px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  border: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 3px;
+}
+button:hover { background: #000; color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+  <img id="nana" src="nana.jpg" />
+</div>
+
+<!-- LAYOUT -->
+<div id="layout">
+  <!-- BACKGROUND IMAGES -->
+  <img class="bgMove" id="bg2" src="backgroundn3.jpg" />
+  <img class="bgMove" id="bg7" src="backgroundn7.jpg" />
+  <img class="bgMove" id="bg6" src="backgroundn6.jpg" />
+  <img class="bgMove" id="bg1" src="backgroundn1.jpg" />
+
+  <!-- PEOPLE -->
+  <img class="person" id="tam" style="top:5%; left:6%;" src="tam.jpg" />
+  <img class="person" id="alice" style="top:10%; right:8%;" src="alice.jpg" />
+  <img class="person" id="jisoo" style="top:30%; left:22%;" src="jisoo.jpg" />
+  <img class="person" id="cooper" style="top:50%; right:8%;" src="cooper.jpg" />
+  <img class="person" id="david" style="top:80%; left:35%;" src="david.jpg" />
+  <img class="person" id="pauline" style="top:55%; right:35%;" src="pauline.jpg" />
+</div>
+
+<!-- MEMO OVERLAY -->
+<div id="memoOverlay">
+  <div id="memoContainer">
+    <button id="backBtn">Back</button>
+    <img id="memoImg" src="" alt="Memo Image">
+    <p id="memoText"></p>
+    
+    <!-- Message input -->
+    <div id="messageSection">
+      <textarea id="messageInput" placeholder="Write an anonymous message..."></textarea><br>
+      <button onclick="sendMessage()">Send Message</button>
+      <button onclick="showMessagesPrompt()">View Messages</button>
+    </div>
+
+    <div id="messagesDisplay" style="margin-top:20px;"></div>
+  </div>
+</div>
+
+<script>
+let nana = document.getElementById("nana");
+let startScreen = document.getElementById("startScreen");
+let layout = document.getElementById("layout");
+let memoOverlay = document.getElementById("memoOverlay");
+let memoImg = document.getElementById("memoImg");
+let memoText = document.getElementById("memoText");
+let messageInput = document.getElementById("messageInput");
+let messagesDisplay = document.getElementById("messagesDisplay");
+let currentAudio = null;
+
+// Store messages per person
+let messages = { tam: [], alice: [], jisoo: [], cooper: [], david: [], pauline: [] };
+
+// -------------------------
+// Start screen
+// -------------------------
+nana.addEventListener("click", () => {
+  nana.style.opacity = 0;
+  setTimeout(()=>{
+    startScreen.style.display = "none";
+    layout.style.display = "block";
+    placeBG();
+    movePeopleSafely();
+    attachPersonEvents();
+  }, 500);
+});
+
+function movePeopleSafely(){
+  const people = Array.from(document.querySelectorAll(".person"));
+  const bgImgs = Array.from(document.querySelectorAll(".bgMove"));
+
+  people.forEach(p => {
+    let moveTimeout;
+    let isPressed = false;
+
+    function move(){
+      if(isPressed) return; // stop moving while pressed
+
+      let safe=false, x, y;
+      while(!safe){
+        x = Math.random()*(window.innerWidth - p.offsetWidth);
+        y = Math.random()*(window.innerHeight - p.offsetHeight);
+        safe=true;
+
+        people.forEach(other=>{
+          if(other===p) return;
+          const ox = parseFloat(other.style.left || other.offsetLeft);
+          const oy = parseFloat(other.style.top || other.offsetTop);
+          if(Math.hypot(ox-x, oy-y)<150) safe=false;
+        });
+
+        bgImgs.forEach(bg=>{
+          const bx = parseFloat(bg.style.left || bg.offsetLeft);
+          const by = parseFloat(bg.style.top || bg.offsetTop);
+          if(Math.hypot(bx-x, by-y)<120) safe=false;
+        });
+      }
+
+      p.style.left = x+'px';
+      p.style.top = y+'px';
+
+      moveTimeout = setTimeout(move, 5000 + Math.random()*3000); // slower movement
+    }
+
+    move();
+
+    // Stop movement while pressing
+    p.onmousedown = () => {
+      isPressed = true;
+      clearTimeout(moveTimeout);  // cancel next move
+      playAudio(p.id);            // play audio
+    };
+    p.onmouseup = p.onmouseleave = () => {
+      isPressed = false;
+      move();                     // resume movement
+      stopAudio();                // stop audio if you want
+    };
+  });
+}
+
+// Update attachPersonEvents() to NOT override onmousedown
+function attachPersonEvents(){
+  const people = document.querySelectorAll(".person");
+  people.forEach(p=>{
+    const name = p.id;
+    p.onclick = ()=>openMemo(name);
+  });
+}
+
+
+function attachPersonEvents(){
+  const people = document.querySelectorAll(".person");
+  people.forEach(p=>{
+    const name = p.id;
+    p.onmousedown = ()=>playAudio(name);
+    p.onmouseup = stopAudio;
+    p.onmouseleave = stopAudio;
+    p.onclick = ()=>openMemo(name);
+  });
+}
+
+function playAudio(name){
+  stopAudio();
+  currentAudio = new Audio(name + ".mp3");
+  currentAudio.loop = true;
+  currentAudio.play();
+}
+
+function stopAudio(){
+  if(currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+}
+
+let currentPerson = null;
+
+function openMemo(name){
+  stopAudio();
+  currentPerson = name;
+  memoOverlay.style.display = "flex";
+  memoImg.src = name + "memo.jpg";
+  memoText.innerHTML = `${name}iiiii:`;
+  messageInput.value = "";
+  messagesDisplay.innerHTML = "";
+}
+
+// Send message
+function sendMessage(){
+  const msg = messageInput.value.trim();
+  if(msg){
+    messages[currentPerson].push(msg);
+    messageInput.value = "";
+    alert("send me your memos to coldesteak@gmail.com to be featured");
+  }
+}
+
+// Show messages (password protected)
+function showMessagesPrompt(){
+  const pass = prompt("Enter password to view messages:");
+  if(pass === "lava bar"){
+    const msgs = messages[currentPerson];
+    if(msgs.length === 0){
+      messagesDisplay.innerHTML = "<em>No messages yet.</em>";
+    } else {
+      messagesDisplay.innerHTML = msgs.map(m=>`<p>• ${m}</p>`).join('');
+    }
+  } else {
+    alert("wrong vape.");
+  }
+}
+
+// Back button
+document.getElementById('backBtn').addEventListener("click", ()=>{
+  memoOverlay.style.display = "none";
+});
+
+// -------------------------
+// Background random placement
+// -------------------------
+function placeBG(){
+  const bgImgs = [document.getElementById("bg2"), document.getElementById("bg7"), document.getElementById("bg6")];
+  const people = document.querySelectorAll(".person");
+  bgImgs.forEach(bg=>{
+    let safe = false, x, y;
+    while(!safe){
+      x = Math.random()*(window.innerWidth-100);
+      y = Math.random()*(window.innerHeight-100);
+      safe=true;
+      people.forEach(p=>{
+        const rect = p.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        if(Math.hypot(cx-x, cy-y)<150) safe=false;
+      });
+    }
+    bg.style.left = x+'px';
+    bg.style.top = y+'px';
+    bg.style.display = "block";
+  });
+}
+
+// -------------------------
+// People random movement
+// -------------------------
+function movePeopleSafely(){
+  const people = Array.from(document.querySelectorAll(".person"));
+  const bgImgs = Array.from(document.querySelectorAll(".bgMove"));
+  people.forEach(p=>{
+    function move(){
+      let safe=false, x, y;
+      while(!safe){
+        x = Math.random()*(window.innerWidth - p.offsetWidth);
+        y = Math.random()*(window.innerHeight - p.offsetHeight);
+        safe=true;
+        people.forEach(other=>{
+          if(other===p) return;
+          const ox=parseFloat(other.style.left||other.offsetLeft);
+          const oy=parseFloat(other.style.top||other.offsetTop);
+          if(Math.hypot(ox-x, oy-y)<150) safe=false;
+        });
+        bgImgs.forEach(bg=>{
+          const bx=parseFloat(bg.style.left||bg.offsetLeft);
+          const by=parseFloat(bg.style.top||bg.offsetTop);
+          if(Math.hypot(bx-x, by-y)<120) safe=false;
+        });
+      }
+      p.style.left = x+'px';
+      p.style.top = y+'px';
+      setTimeout(move, 3000 + Math.random()*2000);
+    }
+    move();
+  });
+}
+</script>
+
+</body>
+</html>
+
