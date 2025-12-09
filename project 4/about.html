@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Doto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<section class="layer-container">
+  <div class="layer layer-middle">
+    <div class="image-center">
+      <img id="toggleImage" src="baby.jpg" alt="layer image">
+    </div>
+
+    <h2>Jisoo Yoon</h2>
+    <p>cicada skin project</p>
+  </div>
+</section>
+
+<script>
+let image = document.getElementById("toggleImage");
+let state = 0;   // 0 = baby, 1 = mosic
+
+image.addEventListener("click", function () {
+  if (state === 0) {
+    image.src = "mosic.jpg";  // swap to second image
+    state = 1;
+  } else {
+    window.location.href = "second.html";  // go to next page
+  }
+});
+</script>
+
+</body>
+</html>

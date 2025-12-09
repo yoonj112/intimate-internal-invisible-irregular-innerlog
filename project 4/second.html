@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Doto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+
+</head>
+<body>
+
+  <h2>Ruhmbled</h2>
+  <p>I picked up my phone because I couldn't hear myself...</p>
+
+  <div class="image-row">
+    <p class="year">2023</p>
+    <img src="./5-27-23.jpg" alt="memo" width="170" height="100">
+    <img src="./6-1-23.jpg" alt="memo" width="170" height="100">
+    <img src="./6-12-23.jpg" alt="memo" width="170" height="100">
+  </div>
+
+  <div class="image-row">
+    <p class="year">2024</p>
+    <img src="./5_24_24.png" alt="memo" width="170" height="100">
+    <img src="./5_24_24-2.png" alt="memo" width="170" height="100">
+    <img src="./6_21_24.png" alt="memo" width="170" height="100">
+    <img src="./8_23_24.png" alt="memo" width="170" height="100">
+  </div>
+
+  <div class="image-row">
+    <p class="year">2025</p>
+    <img src="./1_17_25.png" alt="memo" width="170" height="100">
+    <img src="./3_25_25.png" alt="memo" width="170" height="100">
+    <img src="./4_25_25.png" alt="memo" width="170" height="100">
+    <img src="./4_27_25.png" alt="memo" width="170" height="100">
+    <img src="./5_14_25.png" alt="memo" width="170" height="100">
+  </div>
+
+  <script>
+    const img = document.getElementById('toggleImage');
+    let toggled = false;
+
+    img.addEventListener('click', () => {
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = toggled ? 'baby.jpg' : 'mosic.jpg';
+        img.style.opacity = 1;
+        toggled = !toggled;
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>
+
